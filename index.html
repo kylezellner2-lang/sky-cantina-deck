@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sky Cantina · A proposal for Chipotle</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Sky Cantina. A proposal for Chipotle from Kyle Zellner.">
+<meta property="og:title" content="Sky Cantina · A proposal for Chipotle">
+<meta property="og:description" content="A proposal from Kyle Zellner.">
+<meta property="og:image" content="photos/station.jpg">
+<meta name="theme-color" content="#f6eedd">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%8C%AF%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500&family=Caveat+Brush&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a0d07; --char:#2b150b; --red:#a81612; --red2:#c8261f; --cream:#f6eedd; --paper:#fbf6ea;
+    --kraft:#d8bd8a; --gold:#f2b34c; --foil:#d5dbe0; --green:#5c7f3a;
+    --white:#fff; --mute:rgba(246,238,221,.66); --line:rgba(246,238,221,.16);
+    --gut:32px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--ink)}
+  body{background:var(--ink);color:var(--cream);font-family:"Barlow",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+
+  /* fixed layer */
+  #fx{position:fixed;inset:0;width:100%;height:100%;z-index:30;pointer-events:none}
+  .grain{position:fixed;inset:0;z-index:29;pointer-events:none;opacity:.11;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .progress{position:fixed;left:0;top:0;height:3px;width:0;z-index:41;background:linear-gradient(90deg,var(--red),var(--red2))}
+  .bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:20px var(--gut);font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:15px;letter-spacing:.16em;text-transform:uppercase;pointer-events:none;text-shadow:0 1px 12px rgba(0,0,0,.55);transition:color .4s}
+  .bar em{font-family:"Caveat Brush",cursive;font-style:normal;text-transform:none;letter-spacing:0;font-size:22px;color:var(--gold)}
+  .bar.dark{color:var(--char);text-shadow:none}
+  .bar.dark em{color:var(--red)}
+
+  /* the burrito that falls through the whole page */
+  #burrito{position:fixed;left:0;top:0;width:240px;height:110px;margin:-55px 0 0 -120px;z-index:5;pointer-events:none;opacity:0;will-change:transform,opacity;filter:drop-shadow(0 20px 20px rgba(26,13,7,.42))}
+  #burrito .spin{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+  #burrito svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  #burrito svg.back{transform:rotateX(180deg)}
+
+  /* slides */
+  .slide{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:120px var(--gut)}
+  .inner{position:relative;z-index:6;width:100%;max-width:1240px;margin:0 auto}
+
+  h1,h2{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:800;text-transform:uppercase;line-height:.9;letter-spacing:-.005em}
+  h1{font-size:clamp(84px,min(15.5vw,30vh),250px)}
+  h2{font-size:clamp(52px,8vw,132px)}
+  h2 i,h1 i{font-family:"Caveat Brush",cursive;font-style:normal;text-transform:none;font-weight:400;color:var(--gold);letter-spacing:0;font-size:.98em;line-height:.9}
+  .hs{font-size:clamp(40px,5.2vw,88px);line-height:.95}
+  .fine{margin-top:30px;text-align:center;font-family:"Caveat Brush",cursive;font-size:24px;line-height:1.2;color:rgba(246,238,221,.86)}
+
+  /* reveal */
+  .r{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .in .r{opacity:1;transform:none}
+  .d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}.d4{transition-delay:.46s}
+
+  /* 01 cover: paper, title, the burrito */
+  #hero{padding:0;justify-content:center;text-align:center;color:var(--char);background:radial-gradient(80% 70% at 50% 42%,var(--paper) 0%,var(--cream) 55%,#ead9b8 100%)}
+  #hero .inner{z-index:2;padding:0 var(--gut)}
+  .tag{display:inline-flex;align-items:center;gap:12px;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:var(--char);margin-bottom:14px}
+  .tag img{width:38px;height:38px;border-radius:50%}
+  #hero h1{display:block;color:var(--red)}
+  .wx{display:inline-block;white-space:nowrap}
+  .ch{display:inline-block;will-change:transform,opacity}
+  #home{width:min(46vw,58vh,500px);aspect-ratio:240/110;margin:10px auto 34px}
+  .cue{position:absolute;bottom:26px;left:0;right:0;z-index:3;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:rgba(43,21,11,.6);display:flex;flex-direction:column;align-items:center;gap:10px}
+  .cue:after{content:"";width:1px;height:38px;background:linear-gradient(180deg,var(--red),transparent);animation:cue 1.8s ease-in-out infinite;transform-origin:top}
+  @keyframes cue{0%{transform:scaleY(0)}55%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+  /* 02 the idea */
+  #idea{background:linear-gradient(180deg,var(--ink),var(--char) 60%,var(--ink))}
+  #idea .cols{display:grid;grid-template-columns:.9fr 1.1fr;gap:52px;align-items:center}
+  .shot{position:relative;aspect-ratio:7/5;border-radius:22px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px var(--line)}
+  .shot img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
+  .in .shot img{transform:none}
+
+  /* 03 the climb, then the sky opens on the station */
+  #climb{padding:0;background:#0d1a36}
+  .sky{position:absolute;inset:0;z-index:0}
+  .sky.dawn{background:linear-gradient(180deg,#3b2a4a 0%,#b5563a 48%,#f2b34c 82%,#f8d48a 100%)}
+  .sky.high{background:linear-gradient(180deg,#0a1530 0%,#1f4a86 50%,#8fb9de 88%,#f3d7a6 100%);opacity:0}
+  .cloud{position:absolute;z-index:1;left:var(--x);top:0;width:var(--w);aspect-ratio:2.6;margin-left:calc(var(--w) / -2);border-radius:50%;background:radial-gradient(closest-side,rgba(255,250,240,.95),rgba(255,250,240,.55) 55%,rgba(255,250,240,0));filter:blur(14px);opacity:var(--o,.9);transform:translateY(-60vh);will-change:transform}
+  .alt{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .alt svg{width:clamp(74px,9vw,128px);height:auto;margin-bottom:8px;animation:sway 5s ease-in-out infinite;transform-origin:50% 0}
+  @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  .alt b{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:800;font-size:min(34vh,25vw);line-height:.9;color:var(--cream);font-variant-numeric:tabular-nums;text-shadow:0 10px 60px rgba(13,26,54,.35)}
+  .alt span{font-family:"Caveat Brush",cursive;font-size:clamp(30px,4vw,58px);line-height:1;color:var(--gold)}
+  .door{position:absolute;inset:0;z-index:3;clip-path:inset(47% 44% 47% 44% round 14px);will-change:clip-path}
+  .door img{width:100%;height:100%;object-fit:cover;object-position:50% 58%}
+
+  /* 04 creators, printed like order tickets */
+  #crew{background:radial-gradient(90% 60% at 50% 100%,#4a1d10 0%,var(--char) 45%,var(--ink) 100%)}
+  .tickets{display:grid;grid-template-columns:repeat(6,1fr);gap:18px 14px;margin-top:52px;justify-items:stretch}
+  .tk{--m:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/14px 100%;display:block;text-decoration:none;color:var(--char);background:var(--paper);padding:16px 10px 26px;text-align:center;-webkit-mask:var(--m);mask:var(--m);opacity:0;transform:translateY(-46px) rotate(var(--tilt,0deg));clip-path:inset(0 0 100% 0);transition:clip-path .8s cubic-bezier(.3,.7,.2,1),transform .8s cubic-bezier(.3,.7,.2,1),opacity .2s;transition-delay:calc(var(--i)*.09s)}
+  .in .tk{opacity:1;transform:rotate(var(--tilt,0deg));clip-path:inset(0)}
+  .tk:before{content:"";display:block;border-top:2px dashed rgba(43,21,11,.28);margin:0 4px 14px}
+  .tk img,.tk .mono{width:66%;aspect-ratio:1;border-radius:50%;object-fit:cover;margin:0 auto}
+  .tk .mono{display:flex;align-items:center;justify-content:center;background:var(--red);color:var(--paper);font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:clamp(22px,2.4vw,36px)}
+  .tk b{display:block;font-family:"Barlow Condensed",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(17px,1.45vw,23px);line-height:1;margin-top:12px}
+  .tk em{display:block;font-style:normal;font-size:clamp(11px,.9vw,13.5px);color:#8a6a4f;margin-top:5px;word-break:break-all}
+  .tk.lead b{color:var(--red)}
+  @media (hover:hover){.in .tk:hover{transform:translateY(-6px) rotate(0deg);transition-delay:0s;transition-duration:.3s}}
+
+  /* 05 the jump: photos slide past sideways */
+  #reel{padding:0;display:block;background:linear-gradient(180deg,var(--ink),var(--char) 50%,var(--ink))}
+  .track{position:relative;z-index:6;display:flex;align-items:center;gap:30px;width:max-content;height:100vh;height:100svh;padding:0 9vw;will-change:transform}
+  .frame{flex:none;height:min(66svh,52vw);border-radius:20px;overflow:hidden;transform:rotate(var(--t,0deg));box-shadow:0 34px 80px rgba(0,0,0,.6),0 0 0 1px var(--line)}
+  .frame img{height:100%;width:auto;max-width:none}
+  #reel.scrolly{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* 06 what Chipotle gets */
+  #gets{background:radial-gradient(90% 70% at 50% 0%,var(--red2) 0%,var(--red) 45%,#7c0f0c 100%)}
+  #gets h2 i{color:var(--cream)}
+  .gets{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;text-align:left;margin-top:52px}
+  .gets div{padding:28px 26px 30px;border-radius:20px;background:var(--paper);color:var(--char)}
+  .gets b{display:block;font-family:"Barlow Condensed",Impact,sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(56px,6.4vw,104px);line-height:.9;color:var(--red)}
+  .gets span{display:block;margin-top:14px;font-size:clamp(17px,1.5vw,22px);line-height:1.35}
+
+  /* 07 it has worked before */
+  #proof{background:linear-gradient(180deg,var(--ink),var(--char) 60%,var(--ink))}
+  .vids{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
+  .vid{display:block;text-decoration:none}
+  .vid div{position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,.5),0 0 0 1px var(--line)}
+  .vid img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .vid div:after{content:"";position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:var(--red) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.500z' fill='%23fbf6ea'/%3E%3C/svg%3E") center/26px no-repeat;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .3s}
+  @media (hover:hover){.vid:hover img{transform:scale(1.06)}.vid:hover div:after{transform:scale(1.12)}}
+  .vid b{display:block;font-family:"Barlow Condensed",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(19px,1.6vw,25px);line-height:1;margin-top:14px}
+  .vid em{display:block;font-style:normal;font-size:15px;color:var(--mute);margin-top:4px}
+
+  /* 08 close */
+  #close{background:radial-gradient(80% 70% at 50% 50%,var(--paper) 0%,var(--cream) 55%,#ead9b8 100%);color:var(--char);text-align:center;justify-content:center}
+  #close h2{color:var(--red)}
+  #close h2 i{color:var(--char)}
+  #slot{width:260px;aspect-ratio:240/110;border-radius:60px;margin:0 auto 30px;border:2px dashed rgba(168,22,18,.4);transition:border-color .8s}
+  #slot.on{border-color:transparent}
+  .who{margin-top:30px}
+  .who a{display:inline-flex;align-items:center;min-height:48px;padding:12px 28px;border-radius:99px;background:var(--red);color:var(--paper);text-decoration:none;font-weight:500;font-size:17px;transition:transform .3s,background .3s}
+  .who a:hover{transform:translateY(-2px);background:var(--red2)}
+  .note{margin-top:34px;font-size:13px;color:rgba(43,21,11,.55)}
+
+  @media (max-width:1000px){
+    #idea .cols{grid-template-columns:1fr;gap:34px}
+    .tickets{grid-template-columns:repeat(4,1fr)}
+    .vids{grid-template-columns:repeat(2,1fr);gap:22px 16px}
+    .gets{grid-template-columns:1fr;max-width:560px}
+    .tk b{font-size:clamp(17px,2.4vw,23px)}.tk em{font-size:12.5px}
+  }
+  @media (max-width:640px){
+    :root{--gut:16px}
+    .bar{padding:14px var(--gut);font-size:12px}
+    .bar em{font-size:18px}
+    .slide{padding:92px var(--gut) 84px}
+    h1{font-size:clamp(70px,23vw,132px)}
+    h2{font-size:clamp(48px,14.5vw,80px)}
+    .hs{font-size:clamp(34px,10vw,54px)}
+    .tag{font-size:13px;gap:10px}.tag img{width:32px;height:32px}
+    #home{width:78vw;margin-top:22px}
+    .shot{border-radius:16px}
+    .alt b{font-size:27vw}
+    .door img{object-position:50% 50%}
+    .tickets{grid-template-columns:repeat(2,1fr);gap:14px 12px;margin-top:36px}
+    .tickets .tk:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - 6px)}
+    .tk img,.tk .mono{width:58%}
+    .tk b{font-size:20px}.tk em{font-size:12.5px}.tk .mono{font-size:30px}
+    .fine{font-size:21px}
+    #reel{min-height:0}
+    .track{flex-direction:column;width:auto;height:auto;gap:12px;padding:64px var(--gut)}
+    .frame{width:100%;height:auto;border-radius:14px;transform:none}
+    .frame img{width:100%;height:auto}
+    .gets{gap:12px;margin-top:34px}
+    .gets div{padding:20px 20px 22px;border-radius:16px}
+    .vids{margin-top:34px;gap:20px 12px}
+    .vid div:after{width:44px;height:44px;margin:-22px;background-size:22px}
+    .vid em{font-size:13.5px}
+    #slot{width:200px}
+    #close{min-height:86svh}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .r,.tk{opacity:1;transform:none;clip-path:none}
+    .alt,.sky,.cloud{display:none}
+    .door{clip-path:none}
+    .frame{transform:none}
+  }
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress"></div>
+<div class="bar dark" id="bar"><span>Sky Cantina</span><em>for Chipotle</em></div>
+
+<div id="burrito" aria-hidden="true"><div class="spin"></div></div>
+
+<!-- 01 -->
+<section class="slide" id="hero">
+  <div class="inner">
+    <div class="tag"><img src="photos/pepper.png" alt="">A proposal for Chipotle</div>
+    <h1 aria-label="Sky Cantina"><span class="split">Sky Cantina</span></h1>
+    <div id="home"></div>
+  </div>
+  <div class="cue">Scroll</div>
+</section>
+
+<!-- 02 -->
+<section class="slide" id="idea">
+  <div class="inner cols">
+    <div>
+      <h2 class="hs r">We hang a working Chipotle from a hot air balloon. Creators order, take a bite <i>and jump.</i></h2>
+    </div>
+    <div>
+      <div class="shot r d1">
+        <img src="photos/balloon.jpg" alt="Concept render: a Chipotle counter and tables on a platform hanging under a hot air balloon above the clouds at sunrise">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="slide" id="climb">
+  <div class="sky dawn"></div><div class="sky high"></div>
+  <i class="cloud" style="--x:18%;--w:46vw"></i><i class="cloud" style="--x:78%;--w:58vw;--o:.8"></i><i class="cloud" style="--x:44%;--w:70vw;--o:.7"></i>
+  <i class="cloud" style="--x:88%;--w:40vw"></i><i class="cloud" style="--x:10%;--w:62vw;--o:.75"></i><i class="cloud" style="--x:60%;--w:52vw"></i>
+  <div class="alt" aria-label="12,000 feet">
+    <svg viewBox="0 0 100 140" aria-hidden="true">
+      <path d="M50 4C24 4 8 24 8 47c0 22 18 40 32 54h20c14-14 32-32 32-54C92 24 76 4 50 4z" fill="#a81612"/>
+      <path d="M50 4c-9 0-17 20-17 43 0 22 6 40 11 54h12c5-14 11-32 11-54C67 24 59 4 50 4z" fill="#c8261f"/>
+      <path d="M50 4c-3 0-5 20-5 43 0 22 2 40 3 54h4c1-14 3-32 3-54 0-23-2-43-5-43z" fill="#f6eedd"/>
+      <path d="M41 101l2 17M59 101l-2 17" stroke="#f6eedd" stroke-width="1.4"/>
+      <rect x="39" y="118" width="22" height="15" rx="2.5" fill="#f6eedd"/>
+    </svg>
+    <b id="altnum">0</b><span>feet</span>
+  </div>
+  <div class="door"><img src="photos/station.jpg" alt="Concept render: the Chipotle station hanging under the balloon above the clouds, skydivers under parachutes around it"></div>
+</section>
+
+<!-- 04 -->
+<section class="slide" id="crew">
+  <div class="inner">
+    <h2 class="r">The <i>creators.</i></h2>
+    <div class="tickets" id="tickets"></div>
+    <p class="fine r d4">Eleven creators to choose from. Chipotle picks who jumps.</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="slide" id="reel">
+  <div class="track">
+    <div class="frame" style="--t:-1.2deg"><img src="photos/order.jpg" width="1200" height="823" alt="Concept render: a Chipotle crew member hands a foil-wrapped burrito over the counter to a creator wearing a parachute rig"></div>
+    <div class="frame" style="--t:.9deg"><img src="photos/table.jpg" width="900" height="929" alt="Concept render: creators in parachute rigs eating at a table on the platform above the clouds"></div>
+    <div class="frame" style="--t:-.8deg"><img src="photos/counter.jpg" width="1000" height="1281" alt="Concept render: the full Chipotle station under the balloon with creators at the counter and a table"></div>
+    <div class="frame" style="--t:1.1deg"><img src="photos/jump.jpg" width="1400" height="943" alt="Concept render: a creator jumping off the platform holding a burrito, others under parachutes below"></div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="slide" id="gets">
+  <div class="inner">
+    <h2 class="hs r">What <i>Chipotle gets.</i></h2>
+    <div class="gets">
+      <div class="r d1"><b>Posts</b><span>from each creator who jumps, on their own Instagram and TikTok. 6M+ combined reach across the eleven.</span></div>
+      <div class="r d2"><b>Ads</b><span>Every creator post can run as a paid ad.</span></div>
+      <div class="r d3"><b>TV</b><span>A commercial filmed alongside the jump, cut to 15, 30 and 60 seconds.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="slide" id="proof">
+  <div class="inner">
+    <h2 class="hs r">Balloon stunts that have <i>already worked.</i></h2>
+    <div class="vids">
+      <a class="vid r d1" href="https://www.youtube.com/watch?v=TIh0JNR7SsA" target="_blank" rel="noopener"><div><img src="photos/proof-jay.jpg" alt=""></div><b>Jay Alvarrez</b><em>Trampoline under a balloon</em></a>
+      <a class="vid r d2" href="https://www.youtube.com/watch?v=PSVuDBKLC5A" target="_blank" rel="noopener"><div><img src="photos/proof-redbull.jpg" alt=""></div><b>Red Bull</b><em>BMX park under a balloon</em></a>
+      <a class="vid r d3" href="https://www.youtube.com/shorts/cRS9sJQoqGY" target="_blank" rel="noopener"><div><img src="photos/proof-diniz.jpg" alt=""></div><b>Jhonata Diniz</b><em>MMA fight under a balloon</em></a>
+      <a class="vid r d4" href="https://www.instagram.com/reel/DVRM6DOkXeC/" target="_blank" rel="noopener"><div><img src="photos/proof-stake.jpg" alt="" style="object-position:50% 42%"></div><b>Stake</b><em>Boxing ring under a balloon</em></a>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="slide" id="close">
+  <div class="inner">
+    <div id="slot"></div>
+    <h2 class="hs r">Kyle <i>Zellner</i></h2>
+    <p class="who r d1"><a href="mailto:kylezellner2@gmail.com">kylezellner2@gmail.com</a></p>
+    <p class="note r d2">A proposal from Kyle Zellner. All images are concept renders.</p>
+  </div>
+</section>
+
+<script>
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const $=s=>document.querySelector(s);
+
+/* creators, printed as order tickets */
+const CREATORS=[
+  ['Kyle Zellner','kyle.zellner','kyle'],['Nathan Roque','nathanroq','nathan'],['Callie Rounds','callie.rounds','callie'],
+  ['Nicolo Contrada','nicolo.contrada','nicolo'],['Freddy Chase','freddychase','freddy'],['Karissa Wampler','karissa.wampler','karissa'],
+  ['Yusef Reown','yusefireown','yusef'],['Noah Lipsitz','noahlipsitz','noah'],['Miah Nielson','miah_nielson',''],
+  ['Gabrielli Diniz','gabriellidinizz','gabrielli'],['Alessio','papisafari','alessio']];
+$('#tickets').innerHTML=CREATORS.map(([n,h,p],i)=>{
+  const tilt=[-1.6,1.2,-.8,1.8,-1.2,.9,-1.5,1.1,-.7,1.6,-1][i];
+  const pic=p?'<img src="photos/c-'+p+'.jpg" alt="'+n+'" loading="lazy">':'<span class="mono">'+n.split(' ').map(w=>w[0]).join('')+'</span>';
+  return '<a class="tk'+(i?'':' lead')+'" style="--i:'+i+';--tilt:'+tilt+'deg" href="https://www.instagram.com/'+h+'/" target="_blank" rel="noopener">'+pic+'<b>'+n+'</b><em>@'+h+'</em></a>';
+}).join('');
+
+/* the burrito, drawn once per side. wrapped=true adds the foil that peels off on the cover */
+function burritoArt(id,wrapped){
+  const body='M40,20 C22,20 10,36 10,55 C10,74 22,90 40,90 L208,93 A21,37.5 0 0 0 208,18 Z';
+  const foil=(x0)=>'<rect x="'+x0+'" y="0" width="240" height="110" fill="url(#'+id+'f)"/>'
+    +'<g opacity=".9">'
+    +'<path d="M'+(x0+8)+',14 l34,10 l-22,26 z" fill="#fff" opacity=".55"/><path d="M'+(x0+42)+',24 l30,-12 l8,34 z" fill="#8d97a2" opacity=".32"/>'
+    +'<path d="M'+(x0+20)+',50 l22,-26 l38,22 l-30,26 z" fill="#fff" opacity=".28"/><path d="M'+(x0+50)+',72 l30,-26 l26,30 l-34,18 z" fill="#7f8a96" opacity=".3"/>'
+    +'<path d="M'+(x0+4)+',60 l16,-10 l30,22 l-28,24 z" fill="#9aa4ae" opacity=".34"/><path d="M'+(x0+80)+',12 l34,8 l-8,26 l-26,-0 z" fill="#fff" opacity=".42"/>'
+    +'<path d="M'+(x0+106)+',46 l22,-10 l6,36 l-28,4 z" fill="#fff" opacity=".3"/><path d="M'+(x0+72)+',94 l34,-18 l28,-4 l-6,24 z" fill="#6f7a86" opacity=".28"/>'
+    +'</g>'
+    +'<g fill="none" stroke="#fff" stroke-width="1" opacity=".75" stroke-linecap="round"><path d="M'+(x0+20)+',50 l22,-26 l38,22"/><path d="M'+(x0+50)+',72 l30,-26 l26,30"/><path d="M'+(x0+80)+',12 l-0,34 l26,0"/></g>'
+    +'<g fill="none" stroke="#5f6a76" stroke-width=".8" opacity=".5" stroke-linecap="round"><path d="M'+(x0+42)+',24 l8,48"/><path d="M'+(x0+4)+',60 l46,12"/><path d="M'+(x0+106)+',46 l0,30"/></g>';
+  return '<svg class="'+(wrapped?'front':'back')+'" viewBox="0 0 240 110"><defs>'
+    +'<linearGradient id="'+id+'t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e2b6"/><stop offset=".55" stop-color="#e6c48a"/><stop offset="1" stop-color="#c59658"/></linearGradient>'
+    +'<linearGradient id="'+id+'f" x1="0" y1="0" x2=".25" y2="1"><stop offset="0" stop-color="#fbfcfd"/><stop offset=".45" stop-color="#d3d9df"/><stop offset="1" stop-color="#98a2ad"/></linearGradient>'
+    +'<clipPath id="'+id+'b"><path d="'+body+'"/></clipPath>'
+    +'<clipPath id="'+id+'e"><path d="M0,0 L132,0 L141,13 L128,25 L143,39 L130,51 L145,65 L131,78 L142,93 L134,110 L0,110 Z"/></clipPath>'
+    +'<clipPath id="'+id+'p"><rect id="'+id+'peel" x="118" y="0" width="'+(wrapped?126:0)+'" height="110"/></clipPath>'
+    +'</defs>'
+    +'<g clip-path="url(#'+id+'b)">'
+      +'<rect width="240" height="110" fill="url(#'+id+'t)"/>'
+      +'<g fill="#a5713a"><ellipse cx="168" cy="40" rx="9" ry="5" opacity=".42" transform="rotate(-18 168 40)"/><ellipse cx="174" cy="58" rx="9" ry="5" opacity=".38" transform="rotate(12 174 58)"/><ellipse cx="160" cy="74" rx="7" ry="4" opacity=".4"/><ellipse cx="158" cy="27" rx="5" ry="2.6" opacity=".3"/><ellipse cx="178" cy="82" rx="5" ry="3" opacity=".34"/></g>'
+      +'<ellipse cx="208" cy="55.5" rx="21" ry="37.5" fill="#f4dfb4"/><ellipse cx="208" cy="55.5" rx="21" ry="37.5" fill="none" stroke="#c59658" stroke-width="1.2"/>'
+      +'<ellipse cx="208.5" cy="55.5" rx="15.5" ry="31" fill="#5a2c14"/>'
+      +'<g fill="#6f9a3c"><path d="M196,34 q6,-6 12,-1 q5,-5 11,1 q-3,6 -11,4 q-7,3 -12,-4z"/><path d="M197,74 q7,-4 11,1 q6,-3 10,3 q-6,5 -11,2 q-6,3 -10,-6z"/></g>'
+      +'<g fill="#fbf6ea"><rect x="198" y="42" width="7" height="3.2" rx="1.6" transform="rotate(20 201 43)"/><rect x="208" y="40" width="7" height="3.2" rx="1.6" transform="rotate(-25 211 41)"/><rect x="213" y="48" width="7" height="3.2" rx="1.6" transform="rotate(60 216 49)"/><rect x="196" y="52" width="7" height="3.2" rx="1.6" transform="rotate(-10 199 53)"/><rect x="205" y="49" width="7" height="3.2" rx="1.6" transform="rotate(35 208 50)"/><rect x="200" y="63" width="7" height="3.2" rx="1.6" transform="rotate(-40 203 64)"/><rect x="211" y="60" width="7" height="3.2" rx="1.6" transform="rotate(10 214 61)"/><rect x="204" y="69" width="7" height="3.2" rx="1.6" transform="rotate(70 207 70)"/></g>'
+      +'<g fill="#1c0f0a"><ellipse cx="203" cy="57.5" rx="3.4" ry="2.3" transform="rotate(-20 203 57.5)"/><ellipse cx="213" cy="55" rx="3.4" ry="2.3" transform="rotate(30 213 55)"/><ellipse cx="209" cy="65" rx="3.4" ry="2.3"/><ellipse cx="215" cy="68" rx="3" ry="2.1" transform="rotate(50 215 68)"/></g>'
+      +'<g fill="#c8261f"><circle cx="207" cy="45.5" r="2.3"/><circle cx="198.5" cy="67" r="2.2"/><circle cx="217" cy="43" r="1.9"/></g><g fill="#f2b34c"><circle cx="212" cy="72.5" r="1.9"/><circle cx="199" cy="47.5" r="1.8"/><circle cx="218" cy="60.5" r="1.7"/></g>'
+      +'<rect width="240" height="34" fill="#fff" opacity=".16"/>'
+      +'<g clip-path="url(#'+id+'e)" transform="translate(5,0)" opacity=".28"><rect width="240" height="110" fill="#3a1c0c"/></g>'
+      +'<g clip-path="url(#'+id+'e)">'+foil(0)
+        +'<g fill="none" stroke="#6a7480" stroke-width=".9" opacity=".6" stroke-linecap="round"><path d="M12,55 L40,24"/><path d="M12,55 L46,40"/><path d="M12,55 L50,58"/><path d="M12,55 L44,76"/><path d="M12,55 L36,88"/></g>'
+      +'</g>'
+      +'<g clip-path="url(#'+id+'p)">'+foil(112)
+        +'<g fill="none" stroke="#6a7480" stroke-width=".9" opacity=".6" stroke-linecap="round"><path d="M226,55 L200,24"/><path d="M226,55 L194,40"/><path d="M226,55 L190,58"/><path d="M226,55 L196,76"/><path d="M226,55 L204,88"/></g>'
+      +'</g>'
+    +'</g></svg>';
+}
+$('#burrito .spin').innerHTML=burritoArt('bf',!reduced)+burritoArt('bb',false);
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.22});
+document.querySelectorAll('.slide').forEach(s=>io.observe(s));
+
+/* progress line, top bar colour on the light slides */
+const bar=$('#progress'),topbar=$('#bar'),heroEl=$('#hero'),closeEl=$('#close'),ideaEl=$('#idea');
+function onScroll(){
+  const h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  topbar.classList.toggle('dark',ideaEl.getBoundingClientRect().top>40||closeEl.getBoundingClientRect().top<40);
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- particles: the trail behind the burrito, and the bursts ---------- */
+const FX=(function(){
+  const cv=$('#fx'),cx=cv.getContext('2d');let W,H,D,P=[],running=false;
+  const cols=['#eef1f4','#c3cad1','#9aa4ae','#ffffff','#d5dbe0','#5c7f3a','#c8261f','#eef1f4','#b8c0c8'];
+  const R=Math.random;
+  function size(){D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;cx.setTransform(D,0,0,D,0,0)}
+  size();addEventListener('resize',size);
+  function burst(x,y,n,pow){for(let i=0;i<n;i++){const a=R()*Math.PI*2,s=(.3+R())*pow;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-pow*.5,g:.15,w:4+R()*8,h:3+R()*5,rot:R()*6,vr:(R()-.5)*.4,col:cols[(R()*cols.length)|0],life:1,dec:.006+R()*.007})}kick()}
+  function fleck(x,y,spread){if(P.length>260)return;P.push({x:x+(R()-.5)*spread,y:y+(R()-.5)*spread*.5,vx:(R()-.5)*.9,vy:-(.2+R()*.9),g:.004,w:3+R()*6,h:2+R()*4,rot:R()*6,vr:(R()-.5)*.25,col:cols[(R()*cols.length)|0],life:1,dec:.009+R()*.008});kick()}
+  function frame(){
+    cx.clearRect(0,0,W,H);
+    for(let i=P.length-1;i>=0;i--){const p=P[i];
+      p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.life-=p.dec;p.rot+=p.vr;p.vx*=.99;
+      if(p.life<=0||p.y>H+40||p.y<-60){P.splice(i,1);continue}
+      cx.globalAlpha=clamp(p.life*1.5);
+      cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.scale(1,Math.cos(p.rot*2.3));cx.fillStyle=p.col;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore();
+    }
+    cx.globalAlpha=1;
+    if(P.length)requestAnimationFrame(frame);else running=false;
+  }
+  function kick(){if(!running){running=true;requestAnimationFrame(frame)}}
+  return{burst:(x,y,n,p)=>{if(!reduced)burst(x,y,n,p)},fleck:(x,y,s)=>{if(!reduced)fleck(x,y,s)}};
+})();
+
+/* split the title into letters */
+document.querySelectorAll('.split').forEach(el=>{
+  el.innerHTML=el.textContent.split(' ').map(w=>'<span class="wx">'+[...w].map(c=>'<span class="ch">'+c+'</span>').join('')+'</span>').join(' ');
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+let climbST=null;
+const altnum=$('#altnum');
+if(window.gsap&&window.ScrollTrigger&&!reduced){
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ignoreMobileResize:true});
+  const rnd=gsap.utils.random;
+
+  /* cover: letters drop in, then fall off the page as you scroll */
+  gsap.from('#hero .ch',{y:()=>-innerHeight*.6,rotation:()=>rnd(-40,40),opacity:0,stagger:.06,duration:.9,ease:'bounce.out',delay:.2});
+  gsap.from('#hero .tag',{opacity:0,y:20,duration:.9,delay:.1});
+  gsap.timeline({scrollTrigger:{trigger:'#hero',start:'top top',end:'+=110%',scrub:1,pin:true,anticipatePin:1}})
+    .to('#hero .tag, #hero .cue',{opacity:0,duration:.15},0)
+    .fromTo('#hero .ch',{x:0,y:0,rotation:0,opacity:1},{y:()=>innerHeight*.9,x:()=>rnd(-120,120),rotation:()=>rnd(-120,120),opacity:0,stagger:{each:.04,from:'random'},ease:'power2.in',duration:.6,immediateRender:false},.05);
+
+  /* the climb: altitude counts up through the clouds, then the sky opens on the station */
+  const alt={v:0};
+  const tl=gsap.timeline({scrollTrigger:{trigger:'#climb',start:'top top',end:'+=260%',scrub:1,pin:true,anticipatePin:1}});
+  climbST=tl.scrollTrigger;
+  tl.to(alt,{v:12000,duration:3,ease:'power1.inOut',onUpdate:()=>{altnum.textContent=(Math.round(alt.v/10)*10).toLocaleString('en-US')}},0)
+    .to('.sky.high',{opacity:1,duration:2.4,ease:'none'},.3);
+  document.querySelectorAll('.cloud').forEach((c,i)=>{
+    tl.fromTo(c,{y:()=>-innerHeight*.7},{y:()=>innerHeight*1.5,duration:1.5,ease:'none'},i*.3);
+  });
+  tl.to('.alt',{scale:.8,opacity:0,duration:.35},3.05)
+    .call(()=>FX.burst(innerWidth/2,innerHeight/2,120,10),null,3.1)
+    .fromTo('.door',{autoAlpha:0},{autoAlpha:1,duration:.12},3)
+    .fromTo('.door',{clipPath:'inset(47% 44% 47% 44% round 14px)'},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:1.3,ease:'power2.inOut'},3.05)
+    .fromTo('.door img',{scale:1.45},{scale:1.02,duration:1.6,ease:'power2.out'},3.05)
+    .to({}, {duration:.6});
+
+  /* the jump: sideways strip of photos, scrubbed by scroll */
+  const track=$('.track'),run=()=>Math.max(0,track.scrollWidth-innerWidth);
+  gsap.matchMedia().add('(min-width:641px)',()=>{
+    gsap.to(track,{x:()=>-run(),ease:'none',scrollTrigger:{trigger:'#reel',start:'top top',end:()=>'+='+run(),scrub:1,pin:true,anticipatePin:1,invalidateOnRefresh:true}});
+  });
+
+}else{
+  const d=$('.door');if(d)d.style.clipPath='none';
+  document.querySelectorAll('.alt,.sky,.cloud').forEach(e=>e.style.display='none');
+  $('#reel').classList.add('scrolly');
+}
+
+/* ---------- the burrito: drops onto the cover, unwraps, tumbles down the page leaving a trail, lands on the last slide ---------- */
+(function(){
+  const el=$('#burrito'),spin=el.querySelector('.spin'),home=$('#home'),slot=$('#slot'),peel=document.getElementById('bfpeel');
+  const t0=performance.now();let cx=0,cy=0,cs=1,first=true,landed=false,peeled=false,lx=0,ly=0;
+  function center(n){const r=n.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2,s:r.width/240}}
+  function unwrap(){
+    if(peeled)return;peeled=true;
+    const a=performance.now(),w0=126;
+    (function step(t){const p=clamp((t-a)/1100),e=1-Math.pow(1-p,3);peel.setAttribute('width',w0*(1-e));
+      if(p<1){if(Math.random()<.5)FX.fleck(cx+cs*(118+w0*(1-e)-120),cy,30*cs);requestAnimationFrame(step)}})(a);
+  }
+  (function go(now){
+    const vw=innerWidth,vh=innerHeight,y=scrollY,doc=document.documentElement.scrollHeight-vh;
+    const s=center(slot);
+    const k=ease(clamp((vh*1.05-s.y)/(vh*.55)));          // 0 falling, 1 landed on the slot
+    let tx,ty,ts,rx=0,rz=0,op=1;
+    if(reduced){tx=s.x;ty=s.y;ts=s.s;op=(s.y>-100&&s.y<vh+100)?1:0;slot.classList.add('on')}
+    else{
+      const h=center(home),intro=clamp((now-t0-900)/900),e=1-Math.pow(1-intro,3);
+      const leave=ease(clamp(y/(vh*.7)));                  // 0 at rest under the title
+      const p=doc>0?y/doc:0,small=vw<=640?.5:.72;
+      const wx=vw*(.5+(vw<=640?.3:.37)*Math.sin(p*Math.PI*7.3+.6)),wy=vh*(.5+.2*Math.sin(p*Math.PI*4.6+1.2));
+      tx=h.x+(wx-h.x)*leave;ty=h.y+(wy-h.y)*leave-(1-e)*vh*.8;ts=h.s+(small-h.s)*leave;
+      tx+=(s.x-tx)*k;ty+=(s.y-ty)*k;ts+=(s.s-ts)*k;
+      const live=leave*(1-k);
+      rz=-10*(1-leave)+y*.3*live-7*k+(1-e)*-160;
+      rx=y*.45*live;
+      if(!leave){rz+=Math.sin(now/1100)*2.5;ty+=Math.sin(now/900)*5}
+      op=intro>0?1:0;
+      if(intro>=1&&now-t0>2000)unwrap();
+      if(leave>0&&!peeled){peeled=true;peel.setAttribute('width',0)}
+      if(climbST){const a=climbST.start,b=climbST.end;
+        op*=y<a?clamp((a-vh*.05-y)/(vh*.3)):clamp((y-(b-vh*.25))/(vh*.25))}
+      if(k>=.999&&!landed){landed=true;slot.classList.add('on');FX.burst(s.x,s.y,110,9)}
+      if(k<.999)landed=false;
+      /* the trail */
+      if(live>.04&&op>.5){const d=Math.hypot(cx-lx,cy-ly);if(d>7){FX.fleck(cx,cy,60*cs);if(d>26)FX.fleck(cx,cy,60*cs);lx=cx;ly=cy}}
+    }
+    const f=(first||k>=.999||reduced)?1:.16;first=false;
+    cx+=(tx-cx)*f;cy+=(ty-cy)*f;cs+=(ts-cs)*f;
+    el.style.opacity=op;
+    el.style.transform='translate3d('+cx+'px,'+cy+'px,0) scale('+cs+')';
+    spin.style.transform='perspective(900px) rotateZ('+rz+'deg) rotateX('+rx+'deg)';
+    requestAnimationFrame(go);
+  })(t0);
+})();
+addEventListener('load',()=>{if(window.ScrollTrigger)ScrollTrigger.refresh()});
+</script>
+</body>
+</html>
