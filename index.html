@@ -32,6 +32,8 @@
   .grain{position:fixed;inset:0;z-index:29;pointer-events:none;opacity:.11;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
   .progress{position:fixed;left:0;top:0;height:3px;width:0;z-index:41;background:linear-gradient(90deg,var(--red),var(--red2))}
   .bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:20px var(--gut);font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:15px;letter-spacing:.16em;text-transform:uppercase;pointer-events:none;text-shadow:0 1px 12px rgba(0,0,0,.55);transition:color .4s}
+  .bar span{display:flex;align-items:center;gap:10px}
+  .bar img{width:34px;height:34px;border-radius:50%;box-shadow:0 2px 10px rgba(0,0,0,.3)}
   .bar em{font-family:"Caveat Brush",cursive;font-style:normal;text-transform:none;letter-spacing:0;font-size:22px;color:var(--gold)}
   .bar.dark{color:var(--char);text-shadow:none}
   .bar.dark em{color:var(--red)}
@@ -62,7 +64,11 @@
   #hero{padding:0;justify-content:center;text-align:center;color:var(--char);background:radial-gradient(80% 70% at 50% 42%,var(--paper) 0%,var(--cream) 55%,#ead9b8 100%)}
   #hero .inner{z-index:2;padding:0 var(--gut)}
   .tag{display:inline-flex;align-items:center;gap:12px;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:var(--char);margin-bottom:14px}
-  .tag img{width:38px;height:38px;border-radius:50%}
+  .seal{width:clamp(72px,8vw,112px);height:auto;margin:0 auto 14px;filter:drop-shadow(0 8px 16px rgba(43,21,11,.25))}
+  .wm{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .wm img{position:absolute;opacity:.09;max-width:none}
+  #gets .wm img{opacity:.14}
+  #hero .wm img,#close .wm img{opacity:.07}
   #hero h1{display:block;color:var(--red)}
   .wx{display:inline-block;white-space:nowrap}
   .ch{display:inline-block;will-change:transform,opacity}
@@ -85,25 +91,12 @@
   .sky.high{background:linear-gradient(180deg,#0a1530 0%,#1f4a86 50%,#8fb9de 88%,#f3d7a6 100%);opacity:0}
   .cloud{position:absolute;z-index:1;left:var(--x);top:0;width:var(--w);aspect-ratio:2.6;margin-left:calc(var(--w) / -2);border-radius:50%;background:radial-gradient(closest-side,rgba(255,250,240,.95),rgba(255,250,240,.55) 55%,rgba(255,250,240,0));filter:blur(14px);opacity:var(--o,.9);transform:translateY(-60vh);will-change:transform}
   .alt{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-  .alt svg{width:clamp(74px,9vw,128px);height:auto;margin-bottom:8px;animation:sway 5s ease-in-out infinite;transform-origin:50% 0}
+  .alt svg{width:clamp(96px,11vw,160px);height:auto;margin-bottom:8px;animation:sway 5s ease-in-out infinite;transform-origin:50% 0}
   @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
   .alt b{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:800;font-size:min(34vh,25vw);line-height:.9;color:var(--cream);font-variant-numeric:tabular-nums;text-shadow:0 10px 60px rgba(13,26,54,.35)}
   .alt span{font-family:"Caveat Brush",cursive;font-size:clamp(30px,4vw,58px);line-height:1;color:var(--gold)}
   .door{position:absolute;inset:0;z-index:3;clip-path:inset(47% 44% 47% 44% round 14px);will-change:clip-path}
   .door img{width:100%;height:100%;object-fit:cover;object-position:50% 58%}
-
-  /* 04 creators, printed like order tickets */
-  #crew{background:radial-gradient(90% 60% at 50% 100%,#4a1d10 0%,var(--char) 45%,var(--ink) 100%)}
-  .tickets{display:grid;grid-template-columns:repeat(6,1fr);gap:18px 14px;margin-top:52px;justify-items:stretch}
-  .tk{--m:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/14px 100%;display:block;text-decoration:none;color:var(--char);background:var(--paper);padding:16px 10px 26px;text-align:center;-webkit-mask:var(--m);mask:var(--m);opacity:0;transform:translateY(-46px) rotate(var(--tilt,0deg));clip-path:inset(0 0 100% 0);transition:clip-path .8s cubic-bezier(.3,.7,.2,1),transform .8s cubic-bezier(.3,.7,.2,1),opacity .2s;transition-delay:calc(var(--i)*.09s)}
-  .in .tk{opacity:1;transform:rotate(var(--tilt,0deg));clip-path:inset(0)}
-  .tk:before{content:"";display:block;border-top:2px dashed rgba(43,21,11,.28);margin:0 4px 14px}
-  .tk img,.tk .mono{width:66%;aspect-ratio:1;border-radius:50%;object-fit:cover;margin:0 auto}
-  .tk .mono{display:flex;align-items:center;justify-content:center;background:var(--red);color:var(--paper);font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:clamp(22px,2.4vw,36px)}
-  .tk b{display:block;font-family:"Barlow Condensed",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(17px,1.45vw,23px);line-height:1;margin-top:12px}
-  .tk em{display:block;font-style:normal;font-size:clamp(11px,.9vw,13.5px);color:#8a6a4f;margin-top:5px;word-break:break-all}
-  .tk.lead b{color:var(--red)}
-  @media (hover:hover){.in .tk:hover{transform:translateY(-6px) rotate(0deg);transition-delay:0s;transition-duration:.3s}}
 
   /* 05 the jump: photos slide past sideways */
   #reel{padding:0;display:block;background:linear-gradient(180deg,var(--ink),var(--char) 50%,var(--ink))}
@@ -144,28 +137,23 @@
 
   @media (max-width:1000px){
     #idea .cols{grid-template-columns:1fr;gap:34px}
-    .tickets{grid-template-columns:repeat(4,1fr)}
     .vids{grid-template-columns:repeat(2,1fr);gap:22px 16px}
     .gets{grid-template-columns:1fr;max-width:560px}
-    .tk b{font-size:clamp(17px,2.4vw,23px)}.tk em{font-size:12.5px}
   }
   @media (max-width:640px){
     :root{--gut:16px}
     .bar{padding:14px var(--gut);font-size:12px}
     .bar em{font-size:18px}
+    .bar img{width:28px;height:28px}
     .slide{padding:92px var(--gut) 84px}
     h1{font-size:clamp(70px,23vw,132px)}
     h2{font-size:clamp(48px,14.5vw,80px)}
     .hs{font-size:clamp(34px,10vw,54px)}
-    .tag{font-size:13px;gap:10px}.tag img{width:32px;height:32px}
+    .tag{font-size:13px;gap:10px}
     #home{width:78vw;margin-top:22px}
     .shot{border-radius:16px}
     .alt b{font-size:27vw}
     .door img{object-position:50% 50%}
-    .tickets{grid-template-columns:repeat(2,1fr);gap:14px 12px;margin-top:36px}
-    .tickets .tk:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - 6px)}
-    .tk img,.tk .mono{width:58%}
-    .tk b{font-size:20px}.tk em{font-size:12.5px}.tk .mono{font-size:30px}
     .fine{font-size:21px}
     #reel{min-height:0}
     .track{flex-direction:column;width:auto;height:auto;gap:12px;padding:64px var(--gut)}
@@ -181,7 +169,7 @@
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
-    .r,.tk{opacity:1;transform:none;clip-path:none}
+    .r{opacity:1;transform:none}
     .alt,.sky,.cloud{display:none}
     .door{clip-path:none}
     .frame{transform:none}
@@ -192,14 +180,15 @@
 <canvas id="fx"></canvas>
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" id="progress"></div>
-<div class="bar dark" id="bar"><span>Sky Cantina</span><em>for Chipotle</em></div>
+<div class="bar dark" id="bar"><span><img src="photos/pepper.png" alt="Chipotle">Sky Cantina</span><em>for Chipotle</em></div>
 
 <div id="burrito" aria-hidden="true"><div class="spin"></div></div>
 
 <!-- 01 -->
 <section class="slide" id="hero">
   <div class="inner">
-    <div class="tag"><img src="photos/pepper.png" alt="">A proposal for Chipotle</div>
+    <img class="seal" src="photos/pepper.png" alt="Chipotle Mexican Grill">
+    <div class="tag">A proposal for Chipotle</div>
     <h1 aria-label="Sky Cantina"><span class="split">Sky Cantina</span></h1>
     <div id="home"></div>
   </div>
@@ -229,7 +218,7 @@
     <svg viewBox="0 0 100 140" aria-hidden="true">
       <path d="M50 4C24 4 8 24 8 47c0 22 18 40 32 54h20c14-14 32-32 32-54C92 24 76 4 50 4z" fill="#a81612"/>
       <path d="M50 4c-9 0-17 20-17 43 0 22 6 40 11 54h12c5-14 11-32 11-54C67 24 59 4 50 4z" fill="#c8261f"/>
-      <path d="M50 4c-3 0-5 20-5 43 0 22 2 40 3 54h4c1-14 3-32 3-54 0-23-2-43-5-43z" fill="#f6eedd"/>
+      <circle cx="50" cy="46" r="25" fill="#f6eedd"/><image href="photos/pepper.png" x="26" y="22" width="48" height="48"/>
       <path d="M41 101l2 17M59 101l-2 17" stroke="#f6eedd" stroke-width="1.4"/>
       <rect x="39" y="118" width="22" height="15" rx="2.5" fill="#f6eedd"/>
     </svg>
@@ -238,12 +227,15 @@
   <div class="door"><img src="photos/station.jpg" alt="Concept render: the Chipotle station hanging under the balloon above the clouds, skydivers under parachutes around it"></div>
 </section>
 
-<!-- 04 -->
-<section class="slide" id="crew">
+<!-- 06 -->
+<section class="slide" id="gets">
   <div class="inner">
-    <h2 class="r">The <i>creators.</i></h2>
-    <div class="tickets" id="tickets"></div>
-    <p class="fine r d4">Eleven creators to choose from. Chipotle picks who jumps.</p>
+    <h2 class="hs r">What <i>Chipotle gets.</i></h2>
+    <div class="gets">
+      <div class="r d1"><b>Posts</b><span>from each creator who jumps, on their own Instagram and TikTok.</span></div>
+      <div class="r d2"><b>Ads</b><span>Every creator post can run as a paid ad.</span></div>
+      <div class="r d3"><b>TV</b><span>A commercial filmed alongside the jump, cut to 15, 30 and 60 seconds.</span></div>
+    </div>
   </div>
 </section>
 
@@ -254,18 +246,6 @@
     <div class="frame" style="--t:.9deg"><img src="photos/table.jpg" width="900" height="929" alt="Concept render: creators in parachute rigs eating at a table on the platform above the clouds"></div>
     <div class="frame" style="--t:-.8deg"><img src="photos/counter.jpg" width="1000" height="1281" alt="Concept render: the full Chipotle station under the balloon with creators at the counter and a table"></div>
     <div class="frame" style="--t:1.1deg"><img src="photos/jump.jpg" width="1400" height="943" alt="Concept render: a creator jumping off the platform holding a burrito, others under parachutes below"></div>
-  </div>
-</section>
-
-<!-- 06 -->
-<section class="slide" id="gets">
-  <div class="inner">
-    <h2 class="hs r">What <i>Chipotle gets.</i></h2>
-    <div class="gets">
-      <div class="r d1"><b>Posts</b><span>from each creator who jumps, on their own Instagram and TikTok. 6M+ combined reach across the eleven.</span></div>
-      <div class="r d2"><b>Ads</b><span>Every creator post can run as a paid ad.</span></div>
-      <div class="r d3"><b>TV</b><span>A commercial filmed alongside the jump, cut to 15, 30 and 60 seconds.</span></div>
-    </div>
   </div>
 </section>
 
@@ -288,7 +268,7 @@
     <div id="slot"></div>
     <h2 class="hs r">Kyle <i>Zellner</i></h2>
     <p class="who r d1"><a href="mailto:kylezellner2@gmail.com">kylezellner2@gmail.com</a></p>
-    <p class="note r d2">A proposal from Kyle Zellner. All images are concept renders.</p>
+    <p class="note r d2">A proposal from Kyle Zellner for Chipotle. All images are concept renders.</p>
   </div>
 </section>
 
@@ -297,18 +277,6 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 const $=s=>document.querySelector(s);
-
-/* creators, printed as order tickets */
-const CREATORS=[
-  ['Kyle Zellner','kyle.zellner','kyle'],['Nathan Roque','nathanroq','nathan'],['Callie Rounds','callie.rounds','callie'],
-  ['Nicolo Contrada','nicolo.contrada','nicolo'],['Freddy Chase','freddychase','freddy'],['Karissa Wampler','karissa.wampler','karissa'],
-  ['Yusef Reown','yusefireown','yusef'],['Noah Lipsitz','noahlipsitz','noah'],['Miah Nielson','miah_nielson',''],
-  ['Gabrielli Diniz','gabriellidinizz','gabrielli'],['Alessio','papisafari','alessio']];
-$('#tickets').innerHTML=CREATORS.map(([n,h,p],i)=>{
-  const tilt=[-1.6,1.2,-.8,1.8,-1.2,.9,-1.5,1.1,-.7,1.6,-1][i];
-  const pic=p?'<img src="photos/c-'+p+'.jpg" alt="'+n+'" loading="lazy">':'<span class="mono">'+n.split(' ').map(w=>w[0]).join('')+'</span>';
-  return '<a class="tk'+(i?'':' lead')+'" style="--i:'+i+';--tilt:'+tilt+'deg" href="https://www.instagram.com/'+h+'/" target="_blank" rel="noopener">'+pic+'<b>'+n+'</b><em>@'+h+'</em></a>';
-}).join('');
 
 /* the burrito, drawn once per side. wrapped=true adds the foil that peels off on the cover */
 function burritoArt(id,wrapped){
@@ -343,12 +311,21 @@ function burritoArt(id,wrapped){
       +'<g clip-path="url(#'+id+'e)">'+foil(0)
         +'<g fill="none" stroke="#6a7480" stroke-width=".9" opacity=".6" stroke-linecap="round"><path d="M12,55 L40,24"/><path d="M12,55 L46,40"/><path d="M12,55 L50,58"/><path d="M12,55 L44,76"/><path d="M12,55 L36,88"/></g>'
       +'</g>'
+      +'<circle cx="78" cy="56" r="20" fill="#fbf6ea"/><image href="photos/pepper.png" x="59" y="37" width="38" height="38"/>'
       +'<g clip-path="url(#'+id+'p)">'+foil(112)
         +'<g fill="none" stroke="#6a7480" stroke-width=".9" opacity=".6" stroke-linecap="round"><path d="M226,55 L200,24"/><path d="M226,55 L194,40"/><path d="M226,55 L190,58"/><path d="M226,55 L196,76"/><path d="M226,55 L204,88"/></g>'
       +'</g>'
     +'</g></svg>';
 }
 $('#burrito .spin').innerHTML=burritoArt('bf',!reduced)+burritoArt('bb',false);
+
+/* Chipotle logo scattered behind every slide */
+const WM=[[4,8,150,-18],[70,5,110,12],[88,30,170,20],[50,58,100,-14],[6,64,140,8],[72,76,130,-22],[28,84,105,15],[24,28,85,-10],[42,10,70,24]];
+['hero','idea','gets','proof','close'].forEach((id,n)=>{
+  const d=document.createElement('div');d.className='wm';d.setAttribute('aria-hidden','true');
+  d.innerHTML=WM.map(([x,y,w,r],i)=>'<img src="photos/pepper.png" alt="" style="left:'+((x+n*13)%92)+'%;top:'+y+'%;width:'+w+'px;transform:rotate('+r+'deg)">').join('');
+  document.getElementById(id).prepend(d);
+});
 
 /* reveal */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.22});
@@ -403,9 +380,9 @@ if(window.gsap&&window.ScrollTrigger&&!reduced){
 
   /* cover: letters drop in, then fall off the page as you scroll */
   gsap.from('#hero .ch',{y:()=>-innerHeight*.6,rotation:()=>rnd(-40,40),opacity:0,stagger:.06,duration:.9,ease:'bounce.out',delay:.2});
-  gsap.from('#hero .tag',{opacity:0,y:20,duration:.9,delay:.1});
+  gsap.from('#hero .tag, #hero .seal',{opacity:0,y:20,duration:.9,delay:.1});
   gsap.timeline({scrollTrigger:{trigger:'#hero',start:'top top',end:'+=110%',scrub:1,pin:true,anticipatePin:1}})
-    .to('#hero .tag, #hero .cue',{opacity:0,duration:.15},0)
+    .to('#hero .tag, #hero .cue, #hero .seal',{opacity:0,duration:.15},0)
     .fromTo('#hero .ch',{x:0,y:0,rotation:0,opacity:1},{y:()=>innerHeight*.9,x:()=>rnd(-120,120),rotation:()=>rnd(-120,120),opacity:0,stagger:{each:.04,from:'random'},ease:'power2.in',duration:.6,immediateRender:false},.05);
 
   /* the climb: altitude counts up through the clouds, then the sky opens on the station */
