@@ -129,14 +129,10 @@
 
   /* 07 it has worked before */
   #proof{background:linear-gradient(180deg,var(--ink),var(--char) 60%,var(--ink))}
-  .vids{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
-  .vid{display:block;text-decoration:none}
-  .vid div{position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,.5),0 0 0 1px var(--line)}
-  .vid img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-  .vid div:after{content:"";position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:var(--red) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.500z' fill='%23fbf6ea'/%3E%3C/svg%3E") center/26px no-repeat;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .3s}
-  @media (hover:hover){.vid:hover img{transform:scale(1.06)}.vid:hover div:after{transform:scale(1.12)}}
-  .vid b{display:block;font-family:"Barlow Condensed",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(19px,1.6vw,25px);line-height:1;margin-top:14px}
-  .vid em{display:block;font-style:normal;font-size:15px;color:var(--mute);margin-top:4px}
+  .vids{display:grid;grid-template-columns:1fr .535fr .535fr;grid-template-areas:"a c d" "b c d";gap:16px;margin-top:44px;max-width:1080px;margin-left:auto;margin-right:auto}
+  .vid{position:relative;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 24px 50px rgba(0,0,0,.5),0 0 0 1px var(--line)}
+  .vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .va{grid-area:a;aspect-ratio:1266/596}.vb{grid-area:b;aspect-ratio:708/392}.vc{grid-area:c}.vd{grid-area:d}
 
   /* 08 close */
   #close{background:radial-gradient(80% 70% at 50% 50%,var(--paper) 0%,var(--cream) 55%,#ead9b8 100%);color:var(--char);text-align:center;justify-content:center}
@@ -153,7 +149,6 @@
 
   @media (max-width:1000px){
     #idea .cols,#handle .cols{grid-template-columns:1fr;gap:34px}
-    .vids{grid-template-columns:repeat(2,1fr);gap:22px 16px}
     .gets{grid-template-columns:1fr;max-width:560px}
   }
   @media (max-width:640px){
@@ -180,9 +175,8 @@
     .receipt p{font-size:23px;gap:8px}
     .receipt img{width:60px;height:60px;margin-bottom:16px}
     .gets div{padding:20px 20px 22px;border-radius:16px}
-    .vids{margin-top:34px;gap:20px 12px}
-    .vid div:after{width:44px;height:44px;margin:-22px;background-size:22px}
-    .vid em{font-size:13.5px}
+    .vids{margin-top:30px;gap:12px;grid-template-columns:1fr 1fr;grid-template-areas:"a a" "c d" "b b"}
+    .vc,.vd{aspect-ratio:9/16}
     #slot{width:200px}
     #close{min-height:86svh}
   }
@@ -293,10 +287,10 @@
   <div class="inner">
     <h2 class="hs r">Balloon stunts that have <i>already worked.</i></h2>
     <div class="vids">
-      <a class="vid r d1" href="https://www.youtube.com/watch?v=TIh0JNR7SsA" target="_blank" rel="noopener"><div><img src="photos/proof-jay.jpg" alt=""></div><b>Jay Alvarrez</b><em>Trampoline under a balloon</em></a>
-      <a class="vid r d2" href="https://www.youtube.com/watch?v=PSVuDBKLC5A" target="_blank" rel="noopener"><div><img src="photos/proof-redbull.jpg" alt=""></div><b>Red Bull</b><em>BMX park under a balloon</em></a>
-      <a class="vid r d3" href="https://www.youtube.com/shorts/cRS9sJQoqGY" target="_blank" rel="noopener"><div><img src="photos/proof-diniz.jpg" alt=""></div><b>Jhonata Diniz</b><em>MMA fight under a balloon</em></a>
-      <a class="vid r d4" href="https://www.instagram.com/reel/DVRM6DOkXeC/" target="_blank" rel="noopener"><div><img src="photos/proof-stake.jpg" alt="" style="object-position:50% 42%"></div><b>Stake</b><em>Boxing ring under a balloon</em></a>
+      <div class="vid va r d1"><video controls preload="none" playsinline poster="videos/ford-brazil.jpg" src="videos/ford-brazil.mp4" aria-label="Ford commercial: a pickup truck hanging under a hot air balloon"></video></div>
+      <div class="vid vc r d2"><video controls preload="none" playsinline poster="videos/stake-balloon.jpg" src="videos/stake-balloon.mp4" aria-label="Stake: a football pitch hanging under a hot air balloon"></video></div>
+      <div class="vid vd r d3"><video controls preload="none" playsinline poster="videos/boxing-ring.jpg" src="videos/boxing-ring.mp4" aria-label="Stake: a boxing ring hanging under a hot air balloon"></video></div>
+      <div class="vid vb r d4"><video controls preload="none" playsinline poster="videos/aviator-ontop.jpg" src="videos/aviator-ontop.mp4" aria-label="Aviator by Spribe: a rig on top of a hot air balloon"></video></div>
     </div>
   </div>
 </section>
@@ -500,6 +494,7 @@ if(window.gsap&&window.ScrollTrigger&&!reduced){
   })(t0);
 })();
 addEventListener('load',()=>{if(window.ScrollTrigger)ScrollTrigger.refresh()});
+document.querySelectorAll('.vid video').forEach(v=>v.addEventListener('play',()=>document.querySelectorAll('.vid video').forEach(o=>{if(o!==v)o.pause()})));
 </script>
 </body>
 </html>
