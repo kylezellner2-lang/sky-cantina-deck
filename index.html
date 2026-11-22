@@ -113,6 +113,20 @@
   .gets b{display:block;font-family:"Barlow Condensed",Impact,sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(56px,6.4vw,104px);line-height:.9;color:var(--red)}
   .gets span{display:block;margin-top:14px;font-size:clamp(17px,1.5vw,22px);line-height:1.35}
 
+  /* 06b we handle everything: a receipt */
+  #handle{background:radial-gradient(90% 60% at 80% 50%,#4a1d10 0%,var(--char) 45%,var(--ink) 100%)}
+  #handle .cols{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .rc{display:flex;justify-content:center}
+  .receipt{--m:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/16px 100%;width:min(100%,440px);background:var(--paper);color:var(--char);padding:34px 30px 46px;-webkit-mask:var(--m);mask:var(--m);transform:rotate(2deg) translateY(-40px);clip-path:inset(0 0 100% 0);transition:clip-path 1.3s cubic-bezier(.3,.7,.2,1) .15s,transform 1.3s cubic-bezier(.3,.7,.2,1) .15s}
+  .in .receipt{clip-path:inset(0);transform:rotate(2deg)}
+  .receipt img{width:74px;height:74px;margin:0 auto 22px}
+  .receipt p{display:flex;align-items:baseline;gap:10px;font-family:"Barlow Condensed",sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(24px,2.3vw,34px);line-height:1;padding:11px 0;opacity:0;transition:opacity .5s;transition-delay:calc(.7s + var(--i)*.22s)}
+  .in .receipt p{opacity:1}
+  .receipt u{flex:1;text-decoration:none;border-bottom:2px dotted rgba(43,21,11,.35);transform:translateY(-5px)}
+  .receipt b{font-weight:800;color:var(--green)}
+  .receipt .tot{margin-top:14px;padding-top:22px;border-top:2px dashed rgba(43,21,11,.4);color:var(--red)}
+  .receipt .tot b{color:var(--red)}
+
   /* 07 it has worked before */
   #proof{background:linear-gradient(180deg,var(--ink),var(--char) 60%,var(--ink))}
   .vids{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
@@ -133,10 +147,12 @@
   .who{margin-top:30px}
   .who a{display:inline-flex;align-items:center;min-height:48px;padding:12px 28px;border-radius:99px;background:var(--red);color:var(--paper);text-decoration:none;font-weight:500;font-size:17px;transition:transform .3s,background .3s}
   .who a:hover{transform:translateY(-2px);background:var(--red2)}
-  .note{margin-top:34px;font-size:13px;color:rgba(43,21,11,.55)}
+  .ig{margin-top:18px;font-size:16px;color:rgba(43,21,11,.8)}
+  .ig a{display:inline-flex;align-items:center;min-height:44px;font-weight:500;color:var(--red)}
+  .note{margin-top:20px;font-size:13px;color:rgba(43,21,11,.55)}
 
   @media (max-width:1000px){
-    #idea .cols{grid-template-columns:1fr;gap:34px}
+    #idea .cols,#handle .cols{grid-template-columns:1fr;gap:34px}
     .vids{grid-template-columns:repeat(2,1fr);gap:22px 16px}
     .gets{grid-template-columns:1fr;max-width:560px}
   }
@@ -160,6 +176,9 @@
     .frame{width:100%;height:auto;border-radius:14px;transform:none}
     .frame img{width:100%;height:auto}
     .gets{gap:12px;margin-top:34px}
+    .receipt{padding:26px 20px 40px}
+    .receipt p{font-size:23px;gap:8px}
+    .receipt img{width:60px;height:60px;margin-bottom:16px}
     .gets div{padding:20px 20px 22px;border-radius:16px}
     .vids{margin-top:34px;gap:20px 12px}
     .vid div:after{width:44px;height:44px;margin:-22px;background-size:22px}
@@ -169,7 +188,7 @@
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
-    .r{opacity:1;transform:none}
+    .r,.receipt,.receipt p{opacity:1;transform:none;clip-path:none}
     .alt,.sky,.cloud{display:none}
     .door{clip-path:none}
     .frame{transform:none}
@@ -232,9 +251,9 @@
   <div class="inner">
     <h2 class="hs r">What <i>Chipotle gets.</i></h2>
     <div class="gets">
-      <div class="r d1"><b>Posts</b><span>from each creator who jumps, on their own Instagram and TikTok.</span></div>
-      <div class="r d2"><b>Ads</b><span>Every creator post can run as a paid ad.</span></div>
-      <div class="r d3"><b>TV</b><span>A commercial filmed alongside the jump, cut to 15, 30 and 60 seconds.</span></div>
+      <div class="r d1"><b>1</b><span>finished commercial, shot by a commercial-level production team, ready to air on live TV.</span></div>
+      <div class="r d2"><b>6</b><span>creators on the jump.</span></div>
+      <div class="r d3"><b>1–2</b><span>Reels from each creator, posted on their own pages.</span></div>
     </div>
   </div>
 </section>
@@ -246,6 +265,25 @@
     <div class="frame" style="--t:.9deg"><img src="photos/table.jpg" width="900" height="929" alt="Concept render: creators in parachute rigs eating at a table on the platform above the clouds"></div>
     <div class="frame" style="--t:-.8deg"><img src="photos/counter.jpg" width="1000" height="1281" alt="Concept render: the full Chipotle station under the balloon with creators at the counter and a table"></div>
     <div class="frame" style="--t:1.1deg"><img src="photos/jump.jpg" width="1400" height="943" alt="Concept render: a creator jumping off the platform holding a burrito, others under parachutes below"></div>
+  </div>
+</section>
+
+<!-- 06b -->
+<section class="slide" id="handle">
+  <div class="inner cols">
+    <div>
+      <h2 class="hs r">We handle everything. You just <i>pay the bill.</i></h2>
+    </div>
+    <div class="rc">
+      <div class="receipt">
+        <img src="photos/pepper.png" alt="Chipotle">
+        <p style="--i:0"><span>Production team</span><u></u><b>✓</b></p>
+        <p style="--i:1"><span>Stunt</span><u></u><b>✓</b></p>
+        <p style="--i:2"><span>Coordination</span><u></u><b>✓</b></p>
+        <p style="--i:3"><span>The build</span><u></u><b>✓</b></p>
+        <p class="tot" style="--i:5"><span>Finished commercial</span><u></u><b>Delivered</b></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -267,7 +305,8 @@
   <div class="inner">
     <div id="slot"></div>
     <h2 class="hs r">Kyle <i>Zellner</i></h2>
-    <p class="who r d1"><a href="mailto:kylezellner2@gmail.com">kylezellner2@gmail.com</a></p>
+    <p class="who r d1"><a href="mailto:kylezellner2@gmail.com?subject=Sky%20Cantina">kylezellner2@gmail.com</a></p>
+    <p class="ig r d2"><a href="https://www.instagram.com/kyle.zellner/" target="_blank" rel="noopener">@kyle.zellner</a> · 370K+ followers across Instagram and Facebook</p>
     <p class="note r d2">A proposal from Kyle Zellner for Chipotle. All images are concept renders.</p>
   </div>
 </section>
@@ -321,7 +360,7 @@ $('#burrito .spin').innerHTML=burritoArt('bf',!reduced)+burritoArt('bb',false);
 
 /* Chipotle logo scattered behind every slide */
 const WM=[[4,8,150,-18],[70,5,110,12],[88,30,170,20],[50,58,100,-14],[6,64,140,8],[72,76,130,-22],[28,84,105,15],[24,28,85,-10],[42,10,70,24]];
-['hero','idea','gets','proof','close'].forEach((id,n)=>{
+['hero','idea','gets','handle','proof','close'].forEach((id,n)=>{
   const d=document.createElement('div');d.className='wm';d.setAttribute('aria-hidden','true');
   d.innerHTML=WM.map(([x,y,w,r],i)=>'<img src="photos/pepper.png" alt="" style="left:'+((x+n*13)%92)+'%;top:'+y+'%;width:'+w+'px;transform:rotate('+r+'deg)">').join('');
   document.getElementById(id).prepend(d);
